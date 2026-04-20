@@ -1,62 +1,36 @@
-# acc102-financial-analysis-tool
-Interactive financial analysis tool for 50 listed companies (ACC102 Track4)
-## 1. Project Overview
-This project is an interactive financial analysis tool designed for the ACC102 Accounting course (Track 4: Small Individual Project). It is developed with Python and Jupyter Notebook, aiming to help users analyze financial performance of 50 listed companies across 5 industries.
+# ACC102 Track 4: Interactive Financial Analysis Tool
 
-### Key Objectives
-- Demonstrate practical Python skills in data processing and visualization
-- Conduct financial analysis using real 2025 annual report data
-- Build an user-friendly interface to display key financial indicators
-- Generate charts to support investment decision-making and risk assessment
+## 1. Problem & User
+This project develops a lightweight interactive financial analysis tool to help users conduct corporate performance comparison, ratio calculation, trend analysis and data visualization efficiently. It is designed for students and beginners in finance.
 
----
+## 2. Data
+- Data source: Public corporate financial statement data
+- Access date: 2026
+- Key fields: Company name, year, revenue, net profit, gross margin, ROE, debt-to-asset ratio
 
-## 2. Data Source and Structure
-- **Primary Data Source**:
-  - China Stock Market & Accounting Research (CSMAR)
-  - Official 2025 Annual Reports of A-share/H-share listed companies
-- **Data Coverage**: 5 industries × 10 companies = 50 companies
-- **Key Financial Metrics**:
-  - Revenue and Net Profit
-  - Total Assets
-  - Debt Ratio
-  - Return on Equity (ROE)
-  - Dividend history (2020–2024)
+## 3. Methods
+1. Data loading and formatting
+2. Data cleaning and preprocessing
+3. Financial indicator calculation
+4. Interactive menu-based function control
+5. Chart plotting and result output
 
----
+## 4. Key Findings
+1. Top enterprises maintain stable growth in revenue and net profit.
+2. Gross margin and ROE differ noticeably across companies.
+3. Overall corporate solvency stays healthy and low-risk.
+4. Five-year trend charts clearly reflect business changes.
 
-## 3. Core Functionalities
-The tool includes 8 professional analysis features:
+## 5. How to run
+1. Install required libraries: pip install pandas numpy matplotlib
+2. Open the .ipynb file in Jupyter Notebook
+3. Run all cells and follow the menu instructions
+4. Input numbers to use different analysis functions
 
-1. **Stock Price Trend Simulation**
-   Generate trends based on real company size and profitability.
+## 6. Product link / Demo
+- GitHub Repository: https://github.com/jiahuiui2402/acc102-financial-analysis-tool
+- Demo: Run the notebook locally to launch the interactive tool
 
-2. **Core Financial Indicators**
-   Display assets, revenue, profit, ROE, and debt ratio.
-
-3. **Revenue & Profit Trend Analysis**
-   Visualize 5-year growth trends with bar charts.
-
-4. **Asset Structure Analysis**
-   Use pie charts to show asset composition (e.g., current vs. fixed assets).
-
-5. **Dividend History Report**
-   Review annual dividend payments from 2020 to 2024.
-
-6. **Industry Ranking & Comparison**
-   Rank companies by a composite score (Profit × 0.6 + ROE × 8).
-
-7. **Profitability & Growth Analysis**
-   Calculate gross/net margins and assess growth strength.
-
-8. **Debt & Solvency Risk Assessment**
-   Analyze leverage level with risk warnings for high-debt companies.
-
----
-
-## 4. How to Run
-### Prerequisites
-Install required Python libraries:
-```bash
-pip install pandas numpy matplotlib
-
+## 7. Limitations & next steps
+- Limitations: Relatively small dataset; no real-time data update
+- Next steps: Expand data volume, add online deployment and more analysis modules
