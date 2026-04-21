@@ -375,7 +375,7 @@ elif st.session_state.active_func == "Profitability Analysis":
     fig, ax = plt.subplots(figsize=(16, 8), facecolor='#0F172A')
     ax.set_facecolor('#0F172A')
     line, = ax.plot(fiscal_years, net_margin_series, color=COLOR_MARGIN, linewidth=4, marker='o', markersize=11, markeredgecolor='white', markeredgewidth=2, zorder=3)
-    ax.set_title(f"{comp['coname']} Net Profit Margin Trend (2020-2024)", fontweight='extra bold', fontsize=20, color='white', pad=40)
+    ax.set_title(f"{comp['coname']} Net Profit Margin Trend (2020-2024)", fontweight='extra bold', fontsize=20, color='white', pad=20)
     ax.set_xlabel("Fiscal Year", color='white', fontsize=14, labelpad=20)
     ax.set_ylabel("Net Profit Margin (%)", color='white', fontsize=14, labelpad=20)
     ax.set_xticks(fiscal_years)
@@ -392,12 +392,13 @@ elif st.session_state.active_func == "Profitability Analysis":
             x, y + y_offset, f"{y:.2f}%", ha='center', va=va_align, color='white', fontweight='bold', fontsize=12,
             bbox=dict(facecolor='#0F172A', edgecolor='#334155', pad=3, alpha=0.9, zorder=4)
         )
+    # Move legend to top-left corner inside the plot
     ax.legend(
         [line], ["Net Profit Margin (%)"],
-        loc="upper center", bbox_to_anchor=(0.5, 1.15), ncol=1,
+        loc="upper left",
         facecolor='#1E293B', labelcolor='white', fontsize=14, framealpha=1, edgecolor='#334155'
     )
-    plt.subplots_adjust(top=0.82)
+    plt.subplots_adjust(top=0.9)
     st.pyplot(fig)
 
 # ==================================
