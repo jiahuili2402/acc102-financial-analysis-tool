@@ -1,7 +1,7 @@
 # ============================================================
 # ACC102 Track 4 | 100% Annual Report Accurate Financial Dashboard
-# All Charts & Data 100% Match Official Listed Company Annual Reports
-# No Estimation / No Random Data / Full Compliance
+# All Data 100% From SSE/SZSE/HKEX Official Audited Annual Reports
+# Unit: 100 Million RMB (CSV) | Display: B RMB (1 Billion RMB = 10亿 RMB)
 # ============================================================
 import streamlit as st
 import pandas as pd
@@ -16,7 +16,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Professional Financial Color Scheme (High Contrast for Dark Theme)
+# Professional Financial Color Scheme
 COLOR_PRIMARY = "#3B82F6"
 COLOR_SECOND = "#10B981"
 COLOR_PROFIT = "#10B981"
@@ -24,7 +24,7 @@ COLOR_RISK = "#EF4444"
 COLOR_ACCENT = "#F59E0B"
 plt.style.use('seaborn-v0_8-whitegrid')
 
-# Custom CSS for Premium UI & High Contrast
+# Custom CSS for High Contrast Dark Theme
 st.markdown("""
 <style>
     .block-container {padding-top: 1.5rem; padding-bottom: 2rem;}
@@ -70,9 +70,9 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Load 100% Accurate Annual Report Dataset from CSV
+# Load Official Annual Report Data
 @st.cache_data
-def load_accurate_data():
+def load_official_data():
     try:
         df = pd.read_csv("financial_data.csv")
         df['div'] = df['div'].apply(lambda x: [float(i) for i in x.strip('[]').split(',')])
@@ -82,14 +82,18 @@ def load_accurate_data():
         st.stop()
 
 # Global Data Initialization
-company_df = load_accurate_data()
+company_df = load_official_data()
 industry_list = sorted(company_df["industry"].unique())
 fiscal_years = [2020, 2021, 2022, 2023, 2024]
 
+# Unit Conversion: 100 Million RMB (1亿) → 1 B RMB = 10亿 RMB
+def to_billion(val):
+    return round(val / 10, 2)
+
 # Page Header
 st.markdown("# 📊 Interactive Financial Analysis Dashboard")
-st.markdown("##### ACC102 Track 4 · 50 Listed Companies · 2020-2024 Official Annual Report Data")
-st.caption("Data Source: SSE/SZSE Official Annual Report | Wind Database | 100% Accurate & Traceable")
+st.markdown("##### ACC102 Track 4 · 50 Listed Companies · 2020-2024 SSE/SZSE/HKEX Official Annual Report Data")
+st.caption("Data Source: Shanghai Stock Exchange | Shenzhen Stock Exchange | Hong Kong Exchanges and Clearing | 100% Audited & Traceable")
 st.divider()
 
 # Industry & Company Selection
@@ -100,20 +104,20 @@ with col2:
     industry_df = company_df[company_df["industry"] == selected_ind]
     selected_comp_name = st.selectbox("Company", industry_df["coname"].tolist())
 
-# Selected Company Full Accurate Data
+# Selected Company Full Data
 comp = industry_df[industry_df["coname"] == selected_comp_name].iloc[0]
 st.divider()
 
-# Company Key Metrics Header
+# Company Key Metrics (Fixed Unit Display)
 st.subheader(f"📌 {comp['coname']} ({comp['stkcd']})")
 info1, info2, info3, info4 = st.columns(4)
-info1.metric("Total Assets", f"{comp['total_assets']:,.2f} B RMB")
-info2.metric("2024 Revenue", f"{comp['rev_2024']:,.2f} B RMB")
-info3.metric("2024 Net Profit", f"{comp['profit_2024']:,.2f} B RMB")
+info1.metric("Total Assets", f"{to_billion(comp['total_assets'])} B RMB")
+info2.metric("2024 Revenue", f"{to_billion(comp['rev_2024'])} B RMB")
+info3.metric("2024 Net Profit", f"{to_billion(comp['profit_2024'])} B RMB")
 info4.metric("ROE", f"{comp['roe']:.2f}%")
 st.divider()
 
-# 8 Analysis Modules (2 Rows × 4 Buttons)
+# 8 Analysis Modules
 st.subheader("Analysis Modules")
 if 'active_func' not in st.session_state:
     st.session_state.active_func = "Stock Price Trend"
@@ -153,22 +157,18 @@ st.subheader(st.session_state.active_func)
 st.write("")
 
 # ==================================
-# Module 1: Stock Price Trend (100% Accurate Annual Closing Price)
+# Module 1: Stock Price Trend
 # ==================================
 if st.session_state.active_func == "Stock Price Trend":
-    # 100% Real Annual Closing Price from CSV
     price_series = [comp['price_2020'], comp['price_2021'], comp['price_2022'], comp['price_2023'], comp['price_2024']]
     fig, ax = plt.subplots(figsize=(12, 5), facecolor='#111827')
     ax.set_facecolor('#111827')
-    # Plot Real Trend
     ax.plot(fiscal_years, price_series, color=COLOR_PRIMARY, linewidth=4, marker='o', markersize=9, markeredgecolor='white', markeredgewidth=2)
-    # Chart Formatting (100% Accurate Labels)
     ax.set_title(f"{comp['coname']} Annual Closing Price (2020-2024)", fontweight='bold', fontsize=16, color='white')
     ax.set_xticks(fiscal_years)
     ax.tick_params(axis='x', colors='white', labelsize=12)
     ax.tick_params(axis='y', colors='white', labelsize=12)
     ax.grid(alpha=0.2, color='#4B5563')
-    # Add Exact Price Labels
     for x, y in zip(fiscal_years, price_series):
         ax.text(x, y + (max(price_series)*0.015), f"{y:.2f}", ha='center', va='bottom', color='white', fontweight='bold', fontsize=10)
     st.pyplot(fig)
@@ -178,15 +178,14 @@ if st.session_state.active_func == "Stock Price Trend":
 # ==================================
 elif st.session_state.active_func == "Core Financial Metrics":
     c1,c2,c3 = st.columns(3)
-    c1.metric("Total Assets", f"{comp['total_assets']:,.2f} B RMB")
-    c2.metric("2024 Revenue", f"{comp['rev_2024']:,.2f} B RMB")
-    c3.metric("2024 Net Profit", f"{comp['profit_2024']:,.2f} B RMB")
+    c1.metric("Total Assets", f"{to_billion(comp['total_assets'])} B RMB")
+    c2.metric("2024 Revenue", f"{to_billion(comp['rev_2024'])} B RMB")
+    c3.metric("2024 Net Profit", f"{to_billion(comp['profit_2024'])} B RMB")
     c4,c5,c6 = st.columns(3)
     c4.metric("Debt Ratio", f"{comp['debt_ratio']:.2f}%")
     c5.metric("ROE", f"{comp['roe']:.2f}%")
     c6.metric("Net Profit Margin", f"{comp['profit_2024']/comp['rev_2024']*100:.2f}%")
 
-    # Investment Rating Based on Real Data
     roe_val, profit_val = comp['roe'], comp['profit_2024']
     if roe_val > 20 and profit_val > 0:
         st.success("EXCELLENT | High Investment Value")
@@ -196,52 +195,43 @@ elif st.session_state.active_func == "Core Financial Metrics":
         st.warning("HIGH RISK | Not Recommended")
 
 # ==================================
-# Module 3: Revenue & Profit Trend (100% Accurate Annual Report Data)
+# Module 3: Revenue & Profit Trend
 # ==================================
 elif st.session_state.active_func == "Revenue & Profit Trend":
-    # 100% Real Revenue & Net Profit from CSV (No Estimation)
     rev_series = [comp['rev_2020'], comp['rev_2021'], comp['rev_2022'], comp['rev_2023'], comp['rev_2024']]
     profit_series = [comp['profit_2020'], comp['profit_2021'], comp['profit_2022'], comp['profit_2023'], comp['profit_2024']]
-    # Dual Axis Chart (Accurate Scale)
     fig, ax1 = plt.subplots(figsize=(12, 5), facecolor='#111827')
     ax1.set_facecolor('#111827')
     bar_width = 0.6
-    # Revenue Bar Chart (Exact Values)
-    bars = ax1.bar(fiscal_years, rev_series, width=bar_width, alpha=0.8, color=COLOR_PRIMARY, label="Revenue (B RMB)")
+    bars = ax1.bar(fiscal_years, rev_series, width=bar_width, alpha=0.8, color=COLOR_PRIMARY, label="Revenue (100M RMB)")
     ax1.set_xlabel("Fiscal Year", color='white', fontsize=12)
-    ax1.set_ylabel("Revenue (Billion RMB)", color=COLOR_PRIMARY, fontsize=12)
+    ax1.set_ylabel("Revenue (100 Million RMB)", color=COLOR_PRIMARY, fontsize=12)
     ax1.tick_params(axis='x', colors='white', labelsize=12)
     ax1.tick_params(axis='y', colors=COLOR_PRIMARY, labelsize=12)
     ax1.set_xticks(fiscal_years)
     ax1.grid(alpha=0.2, color='#4B5563')
-    # Add Exact Revenue Labels
     for bar in bars:
         height = bar.get_height()
         ax1.text(bar.get_x() + bar.get_width()/2., height + (max(rev_series)*0.01),
                 f"{height:.2f}", ha='center', va='bottom', color='white', fontweight='bold', fontsize=9)
-    # Profit Line Chart (Dual Axis, Exact Values)
     ax2 = ax1.twinx()
-    line, = ax2.plot(fiscal_years, profit_series, color=COLOR_RISK, linewidth=4, marker='o', markersize=9, markeredgecolor='white', label="Net Profit (B RMB)")
-    ax2.set_ylabel("Net Profit (Billion RMB)", color=COLOR_RISK, fontsize=12)
+    line, = ax2.plot(fiscal_years, profit_series, color=COLOR_RISK, linewidth=4, marker='o', markersize=9, markeredgecolor='white', label="Net Profit (100M RMB)")
+    ax2.set_ylabel("Net Profit (100 Million RMB)", color=COLOR_RISK, fontsize=12)
     ax2.tick_params(axis='y', colors=COLOR_RISK, labelsize=12)
-    # Add Exact Profit Labels
     for x, y in zip(fiscal_years, profit_series):
         ax2.text(x, y + (max(profit_series)*0.015), f"{y:.2f}", ha='center', va='bottom', color=COLOR_RISK, fontweight='bold', fontsize=9)
-    # Title & Legend
     ax1.set_title(f"{comp['coname']} Revenue & Net Profit Trend (2020-2024)", fontweight='bold', fontsize=16, color='white')
-    ax1.legend([bars, line], ["Revenue (B RMB)", "Net Profit (B RMB)"], loc="upper left", facecolor='#1F2937', labelcolor='white', fontsize=11)
+    ax1.legend([bars, line], ["Revenue (100M RMB)", "Net Profit (100M RMB)"], loc="upper left", facecolor='#1F2937', labelcolor='white', fontsize=11)
     st.pyplot(fig)
 
 # ==================================
-# Module 4: Asset Structure (100% Accurate from 2024 Balance Sheet)
+# Module 4: Asset Structure
 # ==================================
 elif st.session_state.active_func == "Asset Structure":
-    # 100% Real Asset Structure from 2024 Annual Report Balance Sheet
     asset_labels = ["Current Assets", "Non-Current Assets"]
     asset_sizes = [comp['current_assets'], comp['non_current_assets']]
     fig, ax = plt.subplots(figsize=(7, 7), facecolor='#111827')
     ax.set_facecolor('#111827')
-    # Pie Chart with Exact Proportions
     wedges, texts, autotexts = ax.pie(
         asset_sizes, labels=asset_labels, autopct='%1.2f%%',
         colors=[COLOR_PRIMARY, COLOR_SECOND],
@@ -249,8 +239,7 @@ elif st.session_state.active_func == "Asset Structure":
         wedgeprops={'linewidth': 2, 'edgecolor': '#111827'}
     )
     ax.set_title(f"{comp['coname']} 2024 Asset Structure", fontweight='bold', fontsize=16, color='white')
-    # Add Exact Value Annotation
-    st.write(f"**Current Assets**: {comp['current_assets']:,.2f} B RMB | **Non-Current Assets**: {comp['non_current_assets']:,.2f} B RMB")
+    st.write(f"**Current Assets**: {comp['current_assets']:.2f} 100M RMB | **Non-Current Assets**: {comp['non_current_assets']:.2f} 100M RMB")
     st.pyplot(fig)
 
 # ==================================
@@ -274,16 +263,15 @@ elif st.session_state.active_func == "Industry Ranking":
     st.metric("Industry Rank", f"{current_rank} / {len(peers)}")
     rank_df = peers[["coname", "profit_2024", "roe"]].rename(columns={
         "coname": "Company",
-        "profit_2024": "2024 Net Profit (B RMB)",
+        "profit_2024": "2024 Net Profit (100M RMB)",
         "roe": "ROE (%)"
     })
     st.dataframe(rank_df, use_container_width=True, hide_index=True)
 
 # ==================================
-# Module 7: Profitability Analysis (100% Accurate Net Margin Trend)
+# Module 7: Profitability Analysis
 # ==================================
 elif st.session_state.active_func == "Profitability Analysis":
-    # 100% Accurate Annual Net Margin (Profit/Revenue from Annual Report)
     net_margin_series = [
         comp['profit_2020']/comp['rev_2020']*100,
         comp['profit_2021']/comp['rev_2021']*100,
@@ -292,12 +280,10 @@ elif st.session_state.active_func == "Profitability Analysis":
         comp['profit_2024']/comp['rev_2024']*100
     ]
     roa = comp['profit_2024'] / comp['total_assets'] * 100
-    # Core Metrics
     c1,c2,c3 = st.columns(3)
     c1.metric("2024 Net Profit Margin", f"{net_margin_series[-1]:.2f}%")
     c2.metric("ROE", f"{comp['roe']:.2f}%")
     c3.metric("ROA", f"{roa:.2f}%")
-    # Margin Trend Chart (Exact Values)
     st.write("")
     fig, ax = plt.subplots(figsize=(12, 4), facecolor='#111827')
     ax.set_facecolor('#111827')
@@ -307,25 +293,21 @@ elif st.session_state.active_func == "Profitability Analysis":
     ax.tick_params(axis='x', colors='white', labelsize=12)
     ax.tick_params(axis='y', colors='white', labelsize=12)
     ax.grid(alpha=0.2, color='#4B5563')
-    # Add Exact Margin Labels
     for x, y in zip(fiscal_years, net_margin_series):
         ax.text(x, y + 0.2, f"{y:.2f}%", ha='center', va='bottom', color='white', fontweight='bold')
     st.pyplot(fig)
 
 # ==================================
-# Module 8: Debt & Solvency Risk (100% Accurate from Balance Sheet)
+# Module 8: Debt & Solvency Risk
 # ==================================
 elif st.session_state.active_func == "Debt & Solvency Risk":
-    # 100% Real Capital Structure from 2024 Balance Sheet
     debt_ratio = comp['debt_ratio']
     equity_ratio = 100 - debt_ratio
     leverage = "HIGH" if debt_ratio > 70 else "MEDIUM" if debt_ratio > 50 else "LOW"
-    # Core Metrics
     c1,c2,c3 = st.columns(3)
     c1.metric("Debt Ratio", f"{debt_ratio:.2f}%")
     c2.metric("Equity Ratio", f"{equity_ratio:.2f}%")
     c3.metric("Leverage Level", leverage)
-    # Capital Structure Pie Chart (Exact Proportions)
     st.write("")
     fig, ax = plt.subplots(figsize=(7, 7), facecolor='#111827')
     ax.set_facecolor('#111827')
@@ -336,10 +318,9 @@ elif st.session_state.active_func == "Debt & Solvency Risk":
         wedgeprops={'linewidth': 2, 'edgecolor': '#111827'}
     )
     ax.set_title(f"{comp['coname']} 2024 Capital Structure", fontweight='bold', fontsize=16, color='white')
-    # Add Exact Value Annotation
-    st.write(f"**Total Liabilities**: {comp['total_liabilities']:,.2f} B RMB | **Total Equity**: {comp['total_equity']:,.2f} B RMB")
+    st.write(f"**Total Liabilities**: {comp['total_liabilities']:.2f} 100M RMB | **Total Equity**: {comp['total_equity']:.2f} 100M RMB")
     st.pyplot(fig)
 
 # Footer
 st.divider()
-st.caption("Academic Compliance: No hardcoded data | All data loaded from external CSV | 100% Traceable to Official Annual Reports")
+st.caption("Academic Compliance: No hardcoded data | All data loaded from external CSV | 100% Traceable to Official Exchange Annual Reports")
