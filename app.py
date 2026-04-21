@@ -244,7 +244,7 @@ elif st.session_state.active_func == "Core Financial Metrics":
         st.warning("HIGH RISK | Not Recommended")
 
 # ==================================
-# Module 3: Revenue & Profit Trend (Labels Separated - Bar Labels at Bottom)
+# Module 3: Revenue & Profit Trend (Labels Separated - Bar Labels Slightly Above Bottom)
 # ==================================
 elif st.session_state.active_func == "Revenue & Profit Trend":
     rev_series = [comp['rev_2020'], comp['rev_2021'], comp['rev_2022'], comp['rev_2023'], comp['rev_2024']]
@@ -264,12 +264,12 @@ elif st.session_state.active_func == "Revenue & Profit Trend":
     ax1.grid(alpha=0.3, color='#334155', linestyle='--', zorder=0)
     ax1.set_ylim(0, max(rev_series) * 1.28)
 
-    # IMPORTANT FIX: Place bar labels at the BOTTOM of bars (above x-axis years)
+    # Place bar labels slightly above the bottom (between bar base and year label)
     for bar in bars:
         height = bar.get_height()
         ax1.text(
             bar.get_x() + bar.get_width()/2.,
-            5,
+            height * 0.03,  # Adjusted: 3% of bar height, just above the base
             f"{height:.2f}",
             ha='center', va='bottom',
             color='white', fontweight='bold', fontsize=11,
@@ -288,7 +288,7 @@ elif st.session_state.active_func == "Revenue & Profit Trend":
     pr_max = max(profit_series)
     ax2.set_ylim(pr_min * 1.4 if pr_min < 0 else 0, pr_max * 1.4)
     
-    # Keep line labels on top (no overlap)
+    # Keep line labels on top
     for x, y in zip(fiscal_years, profit_series):
         y_offset = pr_max * 0.07 if y >= 0 else pr_min * 0.12
         va_align = 'bottom' if y >= 0 else 'top'
