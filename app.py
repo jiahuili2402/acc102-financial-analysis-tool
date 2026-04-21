@@ -419,3 +419,10 @@ elif st.session_state.active_func == "Debt & Solvency Risk":
 # Footer
 st.divider()
 st.caption("Academic Compliance: No hardcoded data | All data loaded from external CSV | 100% Traceable to Official Exchange Annual Reports")
+
+# ==========================
+# 自动启动网页（双击运行）
+# ==========================
+if __name__ == "__main__":
+    import os
+    os.system("streamlit run app.py --server.port=8501")
