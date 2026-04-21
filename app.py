@@ -198,12 +198,17 @@ if st.session_state.active_func == "Stock Price Trend":
     p_min = min(price_series)
     p_max = max(price_series)
     ax.set_ylim(p_min * 0.8, p_max * 1.25)
+
+    # ==============================
+    # ONLY FIXED HERE (smaller label, lower position)
+    # ==============================
     for x, y in zip(fiscal_years, price_series):
         ax.text(
-            x, y + (p_max * 0.06), f"{y:.2f}", ha='center', va='bottom',
-            color='white', fontweight='bold', fontsize=12,
-            bbox=dict(facecolor='#0F172A', edgecolor='#334155', pad=3, alpha=0.9, zorder=4)
+            x, y + (p_max * 0.04), f"{y:.2f}", ha='center', va='bottom',
+            color='white', fontweight='bold', fontsize=10,
+            bbox=dict(facecolor='#0F172A', edgecolor='#334155', pad=2, alpha=0.9, zorder=4)
         )
+
     ax.legend(
         [line], ["Annual Closing Price (RMB)"],
         loc="upper center", bbox_to_anchor=(0.5, 1.15), ncol=1,
