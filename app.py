@@ -181,40 +181,45 @@ st.subheader(st.session_state.active_func)
 st.write("")
 
 # ==================================
-# Module 1: Stock Price Trend
+# Module 1: Stock Price Trend (FINAL FIX - No Overlap At All)
 # ==================================
 if st.session_state.active_func == "Stock Price Trend":
     price_series = [comp['price_2020'], comp['price_2021'], comp['price_2022'], comp['price_2023'], comp['price_2024']]
     fig, ax = plt.subplots(figsize=(16, 8), facecolor='#0F172A')
     ax.set_facecolor('#0F172A')
     line, = ax.plot(fiscal_years, price_series, color=COLOR_PRICE, linewidth=4, marker='o', markersize=11, markeredgecolor='white', markeredgewidth=2, zorder=3)
-    ax.set_title(f"{comp['coname']} Annual Closing Price (2020-2024)", fontweight='extra bold', fontsize=20, color='white', pad=40)
+    
+    # Title moved down to avoid overlap
+    ax.set_title(f"{comp['coname']} Annual Closing Price (2020-2024)", 
+                 fontweight='extra bold', fontsize=20, color='white', pad=20)
     ax.set_xlabel("Fiscal Year", color='white', fontsize=14, labelpad=20)
     ax.set_ylabel("Annual Closing Price (RMB)", color='white', fontsize=14, labelpad=20)
     ax.set_xticks(fiscal_years)
     ax.tick_params(axis='x', colors='white', labelsize=13)
     ax.tick_params(axis='y', colors='white', labelsize=13)
     ax.grid(alpha=0.3, color='#334155', linestyle='--', zorder=0)
+    
     p_min = min(price_series)
     p_max = max(price_series)
-    ax.set_ylim(p_min * 0.8, p_max * 1.25)
+    ax.set_ylim(p_min * 0.8, p_max * 1.15)
 
-    # ==============================
-    # ONLY FIXED HERE (smaller label, lower position)
-    # ==============================
+    # 1. Data labels placed close to points, not floating high
     for x, y in zip(fiscal_years, price_series):
         ax.text(
-            x, y + (p_max * 0.04), f"{y:.2f}", ha='center', va='bottom',
+            x, y + (p_max * 0.02), f"{y:.0f}", ha='center', va='bottom',
             color='white', fontweight='bold', fontsize=10,
-            bbox=dict(facecolor='#0F172A', edgecolor='#334155', pad=2, alpha=0.9, zorder=4)
+            bbox=dict(facecolor='#0F172A', edgecolor='#334155', pad=1, alpha=0.9, zorder=4)
         )
 
+    # 2. Legend moved inside plot to avoid blocking the title
     ax.legend(
         [line], ["Annual Closing Price (RMB)"],
-        loc="upper center", bbox_to_anchor=(0.5, 1.15), ncol=1,
-        facecolor='#1E293B', labelcolor='white', fontsize=14, framealpha=1, edgecolor='#334155'
+        loc="upper right",
+        facecolor='#1E293B', labelcolor='white', fontsize=12, framealpha=1, edgecolor='#334155'
     )
-    plt.subplots_adjust(top=0.82)
+
+    # 3. Adjust plot top margin to leave space for title
+    plt.subplots_adjust(top=0.9)
     st.pyplot(fig)
 
 # ==================================
