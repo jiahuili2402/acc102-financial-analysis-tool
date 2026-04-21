@@ -1,6 +1,6 @@
 # ============================================================
 # ACC102 Track 4 | 100% Annual Report Accurate Financial Dashboard
-# Full Visual Optimization | No Overlap / No Blocking | Dark Theme Premium Style
+# Final Version | Zero Overlap | Ultra Spacious Layout | Premium Dark Theme
 # ============================================================
 import streamlit as st
 import pandas as pd
@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 from matplotlib import rcParams
 
 # --------------------------
-# GLOBAL PLOT STYLE CONFIG (PREMIUM DARK THEME)
+# GLOBAL PLOT STYLE CONFIG (ZERO OVERLAP + SPACIOUS)
 # --------------------------
 rcParams['font.family'] = 'Arial'
 rcParams['font.weight'] = 'bold'
@@ -25,8 +25,10 @@ rcParams['grid.color'] = '#334155'
 rcParams['legend.facecolor'] = '#1E293B'
 rcParams['legend.labelcolor'] = '#FFFFFF'
 rcParams['legend.framealpha'] = 1
-rcParams['legend.borderpad'] = 1
-rcParams['legend.columnspacing'] = 2
+rcParams['legend.borderpad'] = 1.2
+rcParams['legend.columnspacing'] = 3
+rcParams['legend.handletextpad'] = 0.8
+rcParams['legend.fontsize'] = 13
 
 # Global Page Configuration
 st.set_page_config(
@@ -36,7 +38,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Professional Financial Color Scheme (High Contrast for Dark Theme)
+# Professional Financial Color Scheme
 COLOR_REV = "#3B82F6"
 COLOR_PROFIT = "#EF4444"
 COLOR_PRICE = "#60A5FA"
@@ -49,9 +51,9 @@ COLOR_EQUITY = "#34D399"
 # Custom CSS for Premium UI
 st.markdown("""
 <style>
-    .block-container {padding-top: 1.5rem; padding-bottom: 2rem; max-width: 95%;}
+    .block-container {padding-top: 1.5rem; padding-bottom: 2rem; max-width: 98%;}
     h1 {color: #FFFFFF; font-weight: 900; letter-spacing: -0.5px; font-size: 2.2rem;}
-    h2,h3 {color: #F9FAFB; font-weight: 800; margin-top: 1rem; margin-bottom: 1rem;}
+    h2,h3 {color: #F9FAFB; font-weight: 800; margin-top: 1rem; margin-bottom: 1.5rem;}
     .stButton>button {
         width: 100%;
         height: 60px;
@@ -179,42 +181,42 @@ st.subheader(st.session_state.active_func)
 st.write("")
 
 # ==================================
-# Module 1: Stock Price Trend (FULLY OPTIMIZED)
+# Module 1: Stock Price Trend (ZERO OVERLAP)
 # ==================================
 if st.session_state.active_func == "Stock Price Trend":
     price_series = [comp['price_2020'], comp['price_2021'], comp['price_2022'], comp['price_2023'], comp['price_2024']]
-    # Create figure with EXTRA SPACE for outside legend
-    fig, ax = plt.subplots(figsize=(13, 6), facecolor='#0F172A')
+    # ULTRA SPACIOUS FIGURE SIZE
+    fig, ax = plt.subplots(figsize=(16, 8), facecolor='#0F172A')
     ax.set_facecolor('#0F172A')
     # Plot Trend
-    line, = ax.plot(fiscal_years, price_series, color=COLOR_PRICE, linewidth=4, marker='o', markersize=10, markeredgecolor='white', markeredgewidth=2, zorder=3)
+    line, = ax.plot(fiscal_years, price_series, color=COLOR_PRICE, linewidth=4, marker='o', markersize=11, markeredgecolor='white', markeredgewidth=2, zorder=3)
     # Chart Formatting
-    ax.set_title(f"{comp['coname']} Annual Closing Price (2020-2024)", fontweight='extra bold', fontsize=18, color='white', pad=25)
-    ax.set_xlabel("Fiscal Year", color='white', fontsize=13, labelpad=15)
-    ax.set_ylabel("Annual Closing Price (RMB)", color='white', fontsize=13, labelpad=15)
+    ax.set_title(f"{comp['coname']} Annual Closing Price (2020-2024)", fontweight='extra bold', fontsize=20, color='white', pad=40)
+    ax.set_xlabel("Fiscal Year", color='white', fontsize=14, labelpad=20)
+    ax.set_ylabel("Annual Closing Price (RMB)", color='white', fontsize=14, labelpad=20)
     ax.set_xticks(fiscal_years)
-    ax.tick_params(axis='x', colors='white', labelsize=12)
-    ax.tick_params(axis='y', colors='white', labelsize=12)
+    ax.tick_params(axis='x', colors='white', labelsize=13)
+    ax.tick_params(axis='y', colors='white', labelsize=13)
     ax.grid(alpha=0.3, color='#334155', linestyle='--', zorder=0)
     # Set Y-Limit to Leave Space for Labels
     p_min = min(price_series)
     p_max = max(price_series)
     ax.set_ylim(p_min * 0.8, p_max * 1.25)
-    # Add Non-overlapping Price Labels with Semi-transparent Background
+    # Add Non-overlapping Price Labels
     for x, y in zip(fiscal_years, price_series):
         ax.text(
             x, y + (p_max * 0.06), f"{y:.2f}", ha='center', va='bottom',
-            color='white', fontweight='bold', fontsize=11,
-            bbox=dict(facecolor='#0F172A', edgecolor='#334155', pad=2, alpha=0.9, zorder=4)
+            color='white', fontweight='bold', fontsize=12,
+            bbox=dict(facecolor='#0F172A', edgecolor='#334155', pad=3, alpha=0.9, zorder=4)
         )
-    # LEGEND FULLY OUTSIDE - TOP LEFT, NO TRUNCATION
+    # LEGEND TOP CENTER - NO OVERLAP, NO TRUNCATION
     ax.legend(
         [line], ["Annual Closing Price (RMB)"],
-        loc="upper left", bbox_to_anchor=(-0.1, 1.18),
-        facecolor='#1E293B', labelcolor='white', fontsize=12, framealpha=1, edgecolor='#334155'
+        loc="upper center", bbox_to_anchor=(0.5, 1.15), ncol=1,
+        facecolor='#1E293B', labelcolor='white', fontsize=14, framealpha=1, edgecolor='#334155'
     )
-    # Adjust layout to FIT LEGEND
-    plt.subplots_adjust(top=0.82, left=0.12)
+    # Adjust layout to fit perfectly
+    plt.subplots_adjust(top=0.82)
     st.pyplot(fig)
 
 # ==================================
@@ -239,70 +241,69 @@ elif st.session_state.active_func == "Core Financial Metrics":
         st.warning("HIGH RISK | Not Recommended")
 
 # ==================================
-# Module 3: Revenue & Profit Trend (FULLY OPTIMIZED - NO OVERLAP)
+# Module 3: Revenue & Profit Trend (FINAL ZERO OVERLAP VERSION)
 # ==================================
 elif st.session_state.active_func == "Revenue & Profit Trend":
     rev_series = [comp['rev_2020'], comp['rev_2021'], comp['rev_2022'], comp['rev_2023'], comp['rev_2024']]
     profit_series = [comp['profit_2020'], comp['profit_2021'], comp['profit_2022'], comp['profit_2023'], comp['profit_2024']]
-    # Create figure with EXTRA SPACE for outside legend
-    fig, ax1 = plt.subplots(figsize=(13, 7), facecolor='#0F172A')
+    # ULTRA WIDE & SPACIOUS FIGURE
+    fig, ax1 = plt.subplots(figsize=(16, 9), facecolor='#0F172A')
     ax1.set_facecolor('#0F172A')
     bar_width = 0.6
 
     # --- Revenue Bar Chart ---
     bars = ax1.bar(fiscal_years, rev_series, width=bar_width, alpha=0.85, color=COLOR_REV, label="Revenue (100M RMB)", zorder=2)
-    ax1.set_xlabel("Fiscal Year", color='white', fontsize=13, labelpad=18)
-    ax1.set_ylabel("Revenue (100 Million RMB)", color=COLOR_REV, fontsize=13, labelpad=18)
-    ax1.tick_params(axis='x', colors='white', labelsize=12)
-    ax1.tick_params(axis='y', colors=COLOR_REV, labelsize=12)
+    ax1.set_xlabel("Fiscal Year", color='white', fontsize=14, labelpad=20)
+    ax1.set_ylabel("Revenue (100 Million RMB)", color=COLOR_REV, fontsize=14, labelpad=20)
+    ax1.tick_params(axis='x', colors='white', labelsize=13)
+    ax1.tick_params(axis='y', colors=COLOR_REV, labelsize=13)
     ax1.set_xticks(fiscal_years)
     ax1.grid(alpha=0.3, color='#334155', linestyle='--', zorder=0)
     # Set Y-Limit to Leave Space for Labels
     ax1.set_ylim(0, max(rev_series) * 1.28)
-    # Add Bar Value Labels (No Overlap)
+    # Add Bar Value Labels
     for bar in bars:
         height = bar.get_height()
         ax1.text(
             bar.get_x() + bar.get_width()/2., height + (max(rev_series)*0.035),
-            f"{height:.2f}", ha='center', va='bottom', color='white', fontweight='bold', fontsize=11,
-            bbox=dict(facecolor='#0F172A', edgecolor='#334155', pad=2, alpha=0.9, zorder=3)
+            f"{height:.2f}", ha='center', va='bottom', color='white', fontweight='bold', fontsize=12,
+            bbox=dict(facecolor='#0F172A', edgecolor='#334155', pad=3, alpha=0.9, zorder=3)
         )
 
     # --- Net Profit Line Chart (Dual Axis) ---
     ax2 = ax1.twinx()
     line, = ax2.plot(
-        fiscal_years, profit_series, color=COLOR_PROFIT, linewidth=4.5, marker='o', markersize=11,
+        fiscal_years, profit_series, color=COLOR_PROFIT, linewidth=4.5, marker='o', markersize=12,
         markeredgecolor='white', markeredgewidth=2.5, label="Net Profit (100M RMB)", zorder=4
     )
-    ax2.set_ylabel("Net Profit (100 Million RMB)", color=COLOR_PROFIT, fontsize=13, labelpad=18)
-    ax2.tick_params(axis='y', colors=COLOR_PROFIT, labelsize=12)
+    ax2.set_ylabel("Net Profit (100 Million RMB)", color=COLOR_PROFIT, fontsize=14, labelpad=20)
+    ax2.tick_params(axis='y', colors=COLOR_PROFIT, labelsize=13)
     # Set Y-Limit to Avoid Label Overlap
     pr_min = min(profit_series)
     pr_max = max(profit_series)
     ax2.set_ylim(pr_min * 1.4 if pr_min < 0 else 0, pr_max * 1.4)
-    # Add Line Value Labels (Smart Offset - No Overlap)
+    # Add Line Value Labels (Smart Offset)
     for x, y in zip(fiscal_years, profit_series):
-        # Smart Offset: Positive Up, Negative Down
         y_offset = pr_max * 0.07 if y >= 0 else pr_min * 0.12
         va_align = 'bottom' if y >= 0 else 'top'
         ax2.text(
-            x, y + y_offset, f"{y:.2f}", ha='center', va=va_align, color=COLOR_PROFIT, fontweight='bold', fontsize=11,
-            bbox=dict(facecolor='#0F172A', edgecolor='#334155', pad=2, alpha=0.9, zorder=5)
+            x, y + y_offset, f"{y:.2f}", ha='center', va=va_align, color=COLOR_PROFIT, fontweight='bold', fontsize=12,
+            bbox=dict(facecolor='#0F172A', edgecolor='#334155', pad=3, alpha=0.9, zorder=5)
         )
 
-    # --- Title & Legend (FULLY OUTSIDE - NO TRUNCATION) ---
+    # --- Title & Legend (TOP CENTER - NO OVERLAP EVER) ---
     ax1.set_title(
         f"{comp['coname']} Revenue & Net Profit Trend (2020-2024)",
-        fontweight='extra bold', fontsize=19, color='white', pad=35
+        fontweight='extra bold', fontsize=22, color='white', pad=50
     )
-    # Legend Placed Outside Top-Left, 2 columns, No Content Blocking
+    # LEGEND TOP CENTER, 2 COLUMNS, FULLY SEPARATED FROM TITLE & CHART
     ax1.legend(
         [bars, line], ["Revenue (100M RMB)", "Net Profit (100M RMB)"],
-        loc="upper left", bbox_to_anchor=(-0.1, 1.2), ncol=2,
-        facecolor='#1E293B', labelcolor='white', fontsize=12, framealpha=1, edgecolor='#334155'
+        loc="upper center", bbox_to_anchor=(0.5, 1.18), ncol=2,
+        facecolor='#1E293B', labelcolor='white', fontsize=14, framealpha=1, edgecolor='#334155'
     )
-    # Adjust Layout to FIT LEGEND PERFECTLY
-    plt.subplots_adjust(top=0.78, left=0.11)
+    # Adjust Layout to Fit Perfectly
+    plt.subplots_adjust(top=0.78)
     st.pyplot(fig)
 
 # ==================================
@@ -311,16 +312,16 @@ elif st.session_state.active_func == "Revenue & Profit Trend":
 elif st.session_state.active_func == "Asset Structure":
     asset_labels = ["Current Assets", "Non-Current Assets"]
     asset_sizes = [comp['current_assets'], comp['non_current_assets']]
-    fig, ax = plt.subplots(figsize=(8, 8), facecolor='#0F172A')
+    fig, ax = plt.subplots(figsize=(10, 10), facecolor='#0F172A')
     ax.set_facecolor('#0F172A')
     wedges, texts, autotexts = ax.pie(
         asset_sizes, labels=asset_labels, autopct='%1.2f%%',
         colors=[COLOR_ASSET1, COLOR_ASSET2],
-        textprops={'fontsize': 13, 'color': 'white', 'fontweight': 'bold'},
+        textprops={'fontsize': 14, 'color': 'white', 'fontweight': 'bold'},
         wedgeprops={'linewidth': 3, 'edgecolor': '#0F172A'},
         pctdistance=0.85
     )
-    ax.set_title(f"{comp['coname']} 2024 Asset Structure", fontweight='extra bold', fontsize=18, color='white', pad=25)
+    ax.set_title(f"{comp['coname']} 2024 Asset Structure", fontweight='extra bold', fontsize=20, color='white', pad=30)
     st.write(f"**Current Assets**: {comp['current_assets']:.2f} 100M RMB | **Non-Current Assets**: {comp['non_current_assets']:.2f} 100M RMB")
     st.pyplot(fig)
 
@@ -351,7 +352,7 @@ elif st.session_state.active_func == "Industry Ranking":
     st.dataframe(rank_df, use_container_width=True, hide_index=True)
 
 # ==================================
-# Module 7: Profitability Analysis (FULLY OPTIMIZED)
+# Module 7: Profitability Analysis (ZERO OVERLAP)
 # ==================================
 elif st.session_state.active_func == "Profitability Analysis":
     net_margin_series = [
@@ -368,16 +369,16 @@ elif st.session_state.active_func == "Profitability Analysis":
     c3.metric("ROA", f"{roa:.2f}%")
     st.write("")
 
-    # Create figure with EXTRA SPACE for outside legend
-    fig, ax = plt.subplots(figsize=(13, 6), facecolor='#0F172A')
+    # ULTRA SPACIOUS FIGURE
+    fig, ax = plt.subplots(figsize=(16, 8), facecolor='#0F172A')
     ax.set_facecolor('#0F172A')
-    line, = ax.plot(fiscal_years, net_margin_series, color=COLOR_MARGIN, linewidth=4, marker='o', markersize=10, markeredgecolor='white', markeredgewidth=2, zorder=3)
-    ax.set_title(f"{comp['coname']} Net Profit Margin Trend (2020-2024)", fontweight='extra bold', fontsize=18, color='white', pad=25)
-    ax.set_xlabel("Fiscal Year", color='white', fontsize=13, labelpad=15)
-    ax.set_ylabel("Net Profit Margin (%)", color='white', fontsize=13, labelpad=15)
+    line, = ax.plot(fiscal_years, net_margin_series, color=COLOR_MARGIN, linewidth=4, marker='o', markersize=11, markeredgecolor='white', markeredgewidth=2, zorder=3)
+    ax.set_title(f"{comp['coname']} Net Profit Margin Trend (2020-2024)", fontweight='extra bold', fontsize=20, color='white', pad=40)
+    ax.set_xlabel("Fiscal Year", color='white', fontsize=14, labelpad=20)
+    ax.set_ylabel("Net Profit Margin (%)", color='white', fontsize=14, labelpad=20)
     ax.set_xticks(fiscal_years)
-    ax.tick_params(axis='x', colors='white', labelsize=12)
-    ax.tick_params(axis='y', colors='white', labelsize=12)
+    ax.tick_params(axis='x', colors='white', labelsize=13)
+    ax.tick_params(axis='y', colors='white', labelsize=13)
     ax.grid(alpha=0.3, color='#334155', linestyle='--', zorder=0)
     # Set Y-Limit
     m_min = min(net_margin_series)
@@ -388,16 +389,16 @@ elif st.session_state.active_func == "Profitability Analysis":
         y_offset = m_max * 0.07 if y >=0 else m_min * 0.12
         va_align = 'bottom' if y >=0 else 'top'
         ax.text(
-            x, y + y_offset, f"{y:.2f}%", ha='center', va=va_align, color='white', fontweight='bold', fontsize=11,
-            bbox=dict(facecolor='#0F172A', edgecolor='#334155', pad=2, alpha=0.9, zorder=4)
+            x, y + y_offset, f"{y:.2f}%", ha='center', va=va_align, color='white', fontweight='bold', fontsize=12,
+            bbox=dict(facecolor='#0F172A', edgecolor='#334155', pad=3, alpha=0.9, zorder=4)
         )
-    # Legend Outside
+    # LEGEND TOP CENTER - NO OVERLAP
     ax.legend(
         [line], ["Net Profit Margin (%)"],
-        loc="upper left", bbox_to_anchor=(-0.1, 1.18),
-        facecolor='#1E293B', labelcolor='white', fontsize=12, framealpha=1, edgecolor='#334155'
+        loc="upper center", bbox_to_anchor=(0.5, 1.15), ncol=1,
+        facecolor='#1E293B', labelcolor='white', fontsize=14, framealpha=1, edgecolor='#334155'
     )
-    plt.subplots_adjust(top=0.82, left=0.12)
+    plt.subplots_adjust(top=0.82)
     st.pyplot(fig)
 
 # ==================================
@@ -413,16 +414,16 @@ elif st.session_state.active_func == "Debt & Solvency Risk":
     c3.metric("Leverage Level", leverage)
     st.write("")
 
-    fig, ax = plt.subplots(figsize=(8, 8), facecolor='#0F172A')
+    fig, ax = plt.subplots(figsize=(10, 10), facecolor='#0F172A')
     ax.set_facecolor('#0F172A')
     wedges, texts, autotexts = ax.pie(
         [debt_ratio, equity_ratio], labels=["Total Liabilities", "Shareholder Equity"],
         autopct='%1.2f%%', colors=[COLOR_DEBT, COLOR_EQUITY],
-        textprops={'fontsize': 13, 'color': 'white', 'fontweight': 'bold'},
+        textprops={'fontsize': 14, 'color': 'white', 'fontweight': 'bold'},
         wedgeprops={'linewidth': 3, 'edgecolor': '#0F172A'},
         pctdistance=0.85
     )
-    ax.set_title(f"{comp['coname']} 2024 Capital Structure", fontweight='extra bold', fontsize=18, color='white', pad=25)
+    ax.set_title(f"{comp['coname']} 2024 Capital Structure", fontweight='extra bold', fontsize=20, color='white', pad=30)
     st.write(f"**Total Liabilities**: {comp['total_liabilities']:.2f} 100M RMB | **Total Equity**: {comp['total_equity']:.2f} 100M RMB")
     st.pyplot(fig)
 
