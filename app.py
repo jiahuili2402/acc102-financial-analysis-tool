@@ -244,7 +244,7 @@ elif st.session_state.active_func == "Core Financial Metrics":
         st.warning("HIGH RISK | Not Recommended")
 
 # ==================================
-# Module 3: Revenue & Profit Trend (FINAL PERFECT POSITION)
+# Module 3: Revenue & Profit Trend
 # ==================================
 elif st.session_state.active_func == "Revenue & Profit Trend":
     rev_series = [comp['rev_2020'], comp['rev_2021'], comp['rev_2022'], comp['rev_2023'], comp['rev_2024']]
@@ -262,11 +262,13 @@ elif st.session_state.active_func == "Revenue & Profit Trend":
     ax1.tick_params(axis='y', colors=COLOR_REV, labelsize=13)
     ax1.set_xticks(fiscal_years)
     ax1.grid(alpha=0.3, color='#334155', linestyle='--', zorder=0)
-    ax1.set_ylim(0, max(rev_series) * 1.28)
+    ax1.set_ylim(0, max(rev_series) * 1.35)  # Extra top space for bar labels
+
+    # Move bar labels UP by increasing the offset multiplier
     for bar in bars:
         height = bar.get_height()
         ax1.text(
-            bar.get_x() + bar.get_width()/2., height + (max(rev_series)*0.035),
+            bar.get_x() + bar.get_width()/2., height + (max(rev_series)*0.06),
             f"{height:.2f}", ha='center', va='bottom', color='white', fontweight='bold', fontsize=12,
             bbox=dict(facecolor='#0F172A', edgecolor='#334155', pad=3, alpha=0.9, zorder=3)
         )
@@ -295,9 +297,6 @@ elif st.session_state.active_func == "Revenue & Profit Trend":
         fontweight='extra bold', fontsize=22, color='white', pad=50
     )
     
-    # --------------------------
-    # FINAL FIX: PERFECT MIDDLE POSITION (NOT LOW, NOT OVERLAPPING)
-    # --------------------------
     ax1.legend(
         [bars, line], ["Revenue (100M RMB)", "Net Profit (100M RMB)"],
         loc="upper center",
@@ -308,7 +307,6 @@ elif st.session_state.active_func == "Revenue & Profit Trend":
     
     plt.subplots_adjust(top=0.78)
     st.pyplot(fig)
-
 # ==================================
 # Module 4: Asset Structure
 # ==================================
