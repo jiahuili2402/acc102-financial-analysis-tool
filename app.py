@@ -244,7 +244,7 @@ elif st.session_state.active_func == "Core Financial Metrics":
         st.warning("HIGH RISK | Not Recommended")
 
 # ==================================
-# Module 3: Revenue & Profit Trend
+# Module 3: Revenue & Profit Trend (Labels Separated - Bar Labels at Bottom)
 # ==================================
 elif st.session_state.active_func == "Revenue & Profit Trend":
     rev_series = [comp['rev_2020'], comp['rev_2021'], comp['rev_2022'], comp['rev_2023'], comp['rev_2024']]
@@ -254,7 +254,7 @@ elif st.session_state.active_func == "Revenue & Profit Trend":
     ax1.set_facecolor('#0F172A')
     bar_width = 0.6
 
-    # --- Revenue Bar Chart ---
+    # Revenue Bar Chart
     bars = ax1.bar(fiscal_years, rev_series, width=bar_width, alpha=0.85, color=COLOR_REV, label="Revenue (100M RMB)", zorder=2)
     ax1.set_xlabel("Fiscal Year", color='white', fontsize=14, labelpad=20)
     ax1.set_ylabel("Revenue (100 Million RMB)", color=COLOR_REV, fontsize=14, labelpad=20)
@@ -262,18 +262,21 @@ elif st.session_state.active_func == "Revenue & Profit Trend":
     ax1.tick_params(axis='y', colors=COLOR_REV, labelsize=13)
     ax1.set_xticks(fiscal_years)
     ax1.grid(alpha=0.3, color='#334155', linestyle='--', zorder=0)
-    ax1.set_ylim(0, max(rev_series) * 1.35)  # Extra top space for bar labels
+    ax1.set_ylim(0, max(rev_series) * 1.28)
 
-    # Move bar labels UP by increasing the offset multiplier
+    # IMPORTANT FIX: Place bar labels at the BOTTOM of bars (above x-axis years)
     for bar in bars:
         height = bar.get_height()
         ax1.text(
-            bar.get_x() + bar.get_width()/2., height + (max(rev_series)*0.06),
-            f"{height:.2f}", ha='center', va='bottom', color='white', fontweight='bold', fontsize=12,
-            bbox=dict(facecolor='#0F172A', edgecolor='#334155', pad=3, alpha=0.9, zorder=3)
+            bar.get_x() + bar.get_width()/2.,
+            5,
+            f"{height:.2f}",
+            ha='center', va='bottom',
+            color='white', fontweight='bold', fontsize=11,
+            bbox=dict(facecolor='#1E293B', edgecolor='#334155', pad=2, alpha=1, zorder=3)
         )
 
-    # --- Net Profit Line Chart ---
+    # Net Profit Line Chart
     ax2 = ax1.twinx()
     line, = ax2.plot(
         fiscal_years, profit_series, color=COLOR_PROFIT, linewidth=4.5, marker='o', markersize=12,
@@ -284,6 +287,8 @@ elif st.session_state.active_func == "Revenue & Profit Trend":
     pr_min = min(profit_series)
     pr_max = max(profit_series)
     ax2.set_ylim(pr_min * 1.4 if pr_min < 0 else 0, pr_max * 1.4)
+    
+    # Keep line labels on top (no overlap)
     for x, y in zip(fiscal_years, profit_series):
         y_offset = pr_max * 0.07 if y >= 0 else pr_min * 0.12
         va_align = 'bottom' if y >= 0 else 'top'
