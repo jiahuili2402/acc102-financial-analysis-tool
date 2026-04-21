@@ -78,7 +78,7 @@ def load_data():
         df['div'] = df['div'].apply(lambda x: [float(i) for i in x.strip('[]').split(',')])
         return df
     except Exception as e:
-        st.error(f"Data Load Error: Upload financial_data.csv to repository root | Error: {str(e)}")
+        st.error(f"Data Load Error: Please upload the full financial_data.csv to your repository root\nError Details: {str(e)}")
         st.stop()
 
 company_df = load_data()
@@ -155,19 +155,15 @@ st.write("")
 # Module 1: Stock Price Trend (100% Real Annual Closing Price)
 # ==================================
 if st.session_state.active_func == "Stock Price Trend":
-    # Real Price Data from CSV
     price_series = [comp['price_2020'], comp['price_2021'], comp['price_2022'], comp['price_2023'], comp['price_2024']]
     fig, ax = plt.subplots(figsize=(12, 5), facecolor='#111827')
     ax.set_facecolor('#111827')
-    # Plot Real Trend
     ax.plot(years, price_series, color=COLOR_PRIMARY, linewidth=4, marker='o', markersize=9, markeredgecolor='white', markeredgewidth=2)
-    # Chart Formatting
     ax.set_title(f"{comp['coname']} Annual Closing Price (2020-2024)", fontweight='bold', fontsize=16, color='white')
     ax.set_xticks(years)
     ax.tick_params(axis='x', colors='white', labelsize=12)
     ax.tick_params(axis='y', colors='white', labelsize=12)
     ax.grid(alpha=0.2, color='#4B5563')
-    # Add Data Labels
     for x, y in zip(years, price_series):
         ax.text(x, y + (max(price_series)*0.015), f"{y:.2f}", ha='center', va='bottom', color='white', fontweight='bold', fontsize=10)
     st.pyplot(fig)
@@ -185,7 +181,6 @@ elif st.session_state.active_func == "Core Financial Metrics":
     c5.metric("ROE", f"{comp['roe']:.2f}%")
     c6.metric("Net Profit Margin", f"{comp['profit_2024']/comp['rev_2024']*100:.2f}%")
 
-    # Investment Rating
     roe_val, profit_val = comp['roe'], comp['profit_2024']
     if roe_val > 20 and profit_val > 0:
         st.success("EXCELLENT | High Investment Value")
@@ -198,13 +193,10 @@ elif st.session_state.active_func == "Core Financial Metrics":
 # Module 3: Revenue & Profit Trend (100% Real Annual Data)
 # ==================================
 elif st.session_state.active_func == "Revenue & Profit Trend":
-    # Real Revenue & Profit Data
     rev_series = [comp['rev_2020'], comp['rev_2021'], comp['rev_2022'], comp['rev_2023'], comp['rev_2024']]
     profit_series = [comp['profit_2020'], comp['profit_2021'], comp['profit_2022'], comp['profit_2023'], comp['profit_2024']]
-    # Dual Axis Chart
     fig, ax1 = plt.subplots(figsize=(12, 5), facecolor='#111827')
     ax1.set_facecolor('#111827')
-    # Revenue Bar Chart
     bar_width = 0.6
     bars = ax1.bar(years, rev_series, width=bar_width, alpha=0.8, color=COLOR_PRIMARY, label="Revenue (B RMB)")
     ax1.set_xlabel("Year", color='white', fontsize=12)
@@ -213,12 +205,10 @@ elif st.session_state.active_func == "Revenue & Profit Trend":
     ax1.tick_params(axis='y', colors=COLOR_PRIMARY, labelsize=12)
     ax1.set_xticks(years)
     ax1.grid(alpha=0.2, color='#4B5563')
-    # Profit Line Chart (Dual Axis)
     ax2 = ax1.twinx()
     ax2.plot(years, profit_series, color=COLOR_RISK, linewidth=4, marker='o', markersize=9, markeredgecolor='white', label="Net Profit (B RMB)")
     ax2.set_ylabel("Net Profit (Billion RMB)", color=COLOR_RISK, fontsize=12)
     ax2.tick_params(axis='y', colors=COLOR_RISK, labelsize=12)
-    # Title & Legend
     ax1.set_title(f"{comp['coname']} Revenue & Net Profit Trend (2020-2024)", fontweight='bold', fontsize=16, color='white')
     lines1, labels1 = ax1.get_legend_handles_labels()
     lines2, labels2 = ax2.get_legend_handles_labels()
@@ -278,7 +268,6 @@ elif st.session_state.active_func == "Industry Ranking":
 elif st.session_state.active_func == "Profitability Analysis":
     net_margin = comp['profit_2024'] / comp['rev_2024'] * 100
     roa = comp['profit_2024'] / comp['assets'] * 100
-    # 5-Year Margin Trend
     margin_series = [
         comp['profit_2020']/comp['rev_2020']*100,
         comp['profit_2021']/comp['rev_2021']*100,
@@ -286,12 +275,10 @@ elif st.session_state.active_func == "Profitability Analysis":
         comp['profit_2023']/comp['rev_2023']*100,
         net_margin
     ]
-    # Metrics
     c1,c2,c3 = st.columns(3)
     c1.metric("2024 Net Profit Margin", f"{net_margin:.2f}%")
     c2.metric("ROE", f"{comp['roe']:.2f}%")
     c3.metric("ROA", f"{roa:.2f}%")
-    # Trend Chart
     st.write("")
     fig, ax = plt.subplots(figsize=(12, 4), facecolor='#111827')
     ax.set_facecolor('#111827')
@@ -312,12 +299,10 @@ elif st.session_state.active_func == "Debt & Solvency Risk":
     debt_ratio = comp['debt_ratio']
     equity_ratio = 100 - debt_ratio
     leverage = "HIGH" if debt_ratio > 70 else "MEDIUM" if debt_ratio > 50 else "LOW"
-    # Metrics
     c1,c2,c3 = st.columns(3)
     c1.metric("Debt Ratio", f"{debt_ratio:.2f}%")
     c2.metric("Equity Ratio", f"{equity_ratio:.2f}%")
     c3.metric("Leverage Level", leverage)
-    # Capital Structure Pie Chart
     st.write("")
     fig, ax = plt.subplots(figsize=(7, 7), facecolor='#111827')
     ax.set_facecolor('#111827')
