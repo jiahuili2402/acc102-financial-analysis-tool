@@ -1,6 +1,6 @@
 # ============================================================
 # ACC102 Track 4 | 100% Annual Report Accurate Financial Dashboard
-# Revenue & Profit Trend ONLY FIXED | Legend Between Title & Chart
+# Final Version | Legend Perfect Position | No Overlap
 # ============================================================
 import streamlit as st
 import pandas as pd
@@ -63,14 +63,14 @@ st.markdown("""
         background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
         color: #F9FAFB;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 4px 6px -1 rgba(0, 0, 0, 0.3);
     }
     .stButton>button:hover {
         border-color: #3B82F6;
         color: #3B82F6;
         background: linear-gradient(135deg, #1E3A5F 0%, #0F172A 100%);
         transform: translateY(-2px);
-        box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3);
+        box-shadow: 0 10px 15px -3 rgba(59, 130, 246, 0.3);
     }
     div[data-testid="stMetricValue"] {
         font-size: 28px;
@@ -181,7 +181,7 @@ st.subheader(st.session_state.active_func)
 st.write("")
 
 # ==================================
-# Module 1: Stock Price Trend (UNCHANGED)
+# Module 1: Stock Price Trend
 # ==================================
 if st.session_state.active_func == "Stock Price Trend":
     price_series = [comp['price_2020'], comp['price_2021'], comp['price_2022'], comp['price_2023'], comp['price_2024']]
@@ -213,7 +213,7 @@ if st.session_state.active_func == "Stock Price Trend":
     st.pyplot(fig)
 
 # ==================================
-# Module 2: Core Financial Metrics (UNCHANGED)
+# Module 2: Core Financial Metrics
 # ==================================
 elif st.session_state.active_func == "Core Financial Metrics":
     c1,c2,c3 = st.columns(3)
@@ -234,15 +234,12 @@ elif st.session_state.active_func == "Core Financial Metrics":
         st.warning("HIGH RISK | Not Recommended")
 
 # ==================================
-# Module 3: Revenue & Profit Trend (ONLY THIS MODULE IS FIXED)
+# Module 3: Revenue & Profit Trend (FINAL PERFECT POSITION)
 # ==================================
 elif st.session_state.active_func == "Revenue & Profit Trend":
     rev_series = [comp['rev_2020'], comp['rev_2021'], comp['rev_2022'], comp['rev_2023'], comp['rev_2024']]
     profit_series = [comp['profit_2020'], comp['profit_2021'], comp['profit_2022'], comp['profit_2023'], comp['profit_2024']]
     
-    # --------------------------
-    # FIX: LEGEND MOVED TO MIDDLE BETWEEN TITLE AND CHART
-    # --------------------------
     fig, ax1 = plt.subplots(figsize=(16, 9), facecolor='#0F172A')
     ax1.set_facecolor('#0F172A')
     bar_width = 0.6
@@ -283,27 +280,27 @@ elif st.session_state.active_func == "Revenue & Profit Trend":
             bbox=dict(facecolor='#0F172A', edgecolor='#334155', pad=3, alpha=0.9, zorder=5)
         )
 
-    # --- FIXED TITLE & LEGEND ---
     ax1.set_title(
         f"{comp['coname']} Revenue & Net Profit Trend (2020-2024)",
-        fontweight='extra bold', fontsize=22, color='white', pad=60  # Extra padding for the title
+        fontweight='extra bold', fontsize=22, color='white', pad=50
     )
+    
     # --------------------------
-    # KEY FIX: LEGEND IS NOW BETWEEN TITLE AND CHART (NO OVERLAP)
+    # FINAL FIX: PERFECT MIDDLE POSITION (NOT LOW, NOT OVERLAPPING)
     # --------------------------
     ax1.legend(
         [bars, line], ["Revenue (100M RMB)", "Net Profit (100M RMB)"],
-        loc="upper center", 
-        bbox_to_anchor=(0.5, 1.08),  # Positioned halfway between title and chart
+        loc="upper center",
+        bbox_to_anchor=(0.5, 1.12),
         ncol=2,
         facecolor='#1E293B', labelcolor='white', fontsize=14, framealpha=1, edgecolor='#334155'
     )
-    # Adjust layout to fit perfectly
-    plt.subplots_adjust(top=0.75)
+    
+    plt.subplots_adjust(top=0.78)
     st.pyplot(fig)
 
 # ==================================
-# Module 4: Asset Structure (UNCHANGED)
+# Module 4: Asset Structure
 # ==================================
 elif st.session_state.active_func == "Asset Structure":
     asset_labels = ["Current Assets", "Non-Current Assets"]
@@ -322,7 +319,7 @@ elif st.session_state.active_func == "Asset Structure":
     st.pyplot(fig)
 
 # ==================================
-# Module 5: Dividend History (UNCHANGED)
+# Module 5: Dividend History
 # ==================================
 elif st.session_state.active_func == "Dividend History":
     div_df = pd.DataFrame({
@@ -332,7 +329,7 @@ elif st.session_state.active_func == "Dividend History":
     st.dataframe(div_df, use_container_width=True, hide_index=True)
 
 # ==================================
-# Module 6: Industry Ranking (UNCHANGED)
+# Module 6: Industry Ranking
 # ==================================
 elif st.session_state.active_func == "Industry Ranking":
     peers = company_df[company_df["industry"] == comp["industry"]].copy()
@@ -348,7 +345,7 @@ elif st.session_state.active_func == "Industry Ranking":
     st.dataframe(rank_df, use_container_width=True, hide_index=True)
 
 # ==================================
-# Module 7: Profitability Analysis (UNCHANGED)
+# Module 7: Profitability Analysis
 # ==================================
 elif st.session_state.active_func == "Profitability Analysis":
     net_margin_series = [
@@ -394,7 +391,7 @@ elif st.session_state.active_func == "Profitability Analysis":
     st.pyplot(fig)
 
 # ==================================
-# Module 8: Debt & Solvency Risk (UNCHANGED)
+# Module 8: Debt & Solvency Risk
 # ==================================
 elif st.session_state.active_func == "Debt & Solvency Risk":
     debt_ratio = comp['debt_ratio']
