@@ -4,10 +4,10 @@
 
 This project provides an interactive financial dashboard for analyzing listed companies using official annual report data. It is designed for students, investors, and analysts who need a clear, data-driven view of company performance and financial health. This tool helps users quickly interpret financial data, compare companies, and support basic investment or academic analysis decisions.
 
-## 2. Data (source + access date + key fields)
+## 2. Data
 
 * **Source**: Shanghai Stock Exchange (SSE), Shenzhen Stock Exchange (SZSE), Hong Kong Exchanges and Clearing (HKEX) official annual reports
-* **Access Date**: April 2026
+* **Access Date**: 2025–2026
 * **File**: `financial_data.csv`
 * **Key Fields**:
 
@@ -34,11 +34,12 @@ This project provides an interactive financial dashboard for analyzing listed co
 
 ## 4. Key Findings
 
-* Revenue and net profit trends reveal differences in growth stability and potential performance risks across companies
-* ROE and profit margin help identify high-quality, efficient firms
-* Debt ratio highlights financial risk and leverage level
-* Industry ranking provides relative competitive positioning
-* Asset and capital structure show how companies allocate resources and manage liabilities
+* Consumer sector companies (e.g., Kweichow Moutai, Wuliangye) show strong and stable growth in both revenue and net profit, with consistently high ROE (often above 20%), indicating strong pricing power and profitability
+* Financial institutions (e.g., ICBC, China Construction Bank) maintain extremely high revenue and profit levels with stable growth, but exhibit very high debt ratios (~85–90%), reflecting industry characteristics of high leverage
+* New energy companies (e.g., CATL, BYD) demonstrate rapid revenue expansion, but profitability is more volatile, with some firms experiencing losses or sharp fluctuations due to market cycles and cost pressures
+* Pharmaceutical companies show mixed performance: leading firms (e.g., Mindray, WuXi AppTec) achieve steady growth and strong margins, while others (e.g., BeiGene) continue to operate at losses due to high R&D investment
+* Real estate companies exhibit declining revenue and profitability after 2021, with several firms showing negative profits and very high debt ratios, indicating increased financial risk and industry downturn
+* Stock price trends do not always align with financial performance (e.g., some high-performing firms show declining prices), suggesting market sentiment and external factors also play a significant role
 
 ## 5. How to run
 
