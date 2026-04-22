@@ -73,6 +73,3 @@ You can access the live version of the dashboard [here](#). (Replace with your a
   * Integrate additional financial metrics such as cash flow, working capital, and earnings before interest and taxes (EBIT).
   * Implement more advanced predictive analysis features using machine learning.
   * Enhance the user interface with more visualizations and tools for in-depth analysis.
-
-```
-```
