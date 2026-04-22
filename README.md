@@ -1,6 +1,6 @@
 # Financial Analysis Dashboard
 
-## 1. Problem & User (1–2 sentences)
+## 1. Problem & User 
 
 This project provides an interactive financial dashboard for analyzing listed companies using official annual report data. It is designed for students, investors, and analysts who need a clear, data-driven view of company performance and financial health.
 
@@ -32,7 +32,7 @@ This project provides an interactive financial dashboard for analyzing listed co
   * Pie charts (asset and capital structure)
 * Implement modular dashboard navigation with session state
 
-## 4. Key Findings (3–5 bullets)
+## 4. Key Findings 
 
 * Revenue and net profit trends reveal company growth and volatility over time
 * ROE and profit margin help identify high-quality, efficient firms
@@ -40,7 +40,7 @@ This project provides an interactive financial dashboard for analyzing listed co
 * Industry ranking provides relative competitive positioning
 * Asset and capital structure show how companies allocate resources and manage liabilities
 
-## 5. How to run (optional but valuable)
+## 5. How to run
 
 ```bash
 # Clone the repository
