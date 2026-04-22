@@ -28,7 +28,7 @@ This project develops a lightweight interactive financial analysis tool to help 
 4. Input numbers to use different analysis functions
 
 ## 6. Product link / Demo
-- GitHub Repository: https://github.com/jiahuiui2402/acc102-financial-analysis-tool
+- GitHub Repository: https://github.com/jiahuili2402/acc102-financial-analysis-tool
 - Demo: Run the notebook locally to launch the interactive tool
 
 ## 7. Limitations & next steps
