@@ -61,6 +61,7 @@ Make sure the `financial_data.csv` file is in the same directory as `app.py`.
 
 GitHub Repository:
 [https://github.com/jiahuili2402/acc102-financial-analysis-tool](https://github.com/jiahuili2402/acc102-financial-analysis-tool)
+
 Streamlit App Link：
 https://acc102-financial-analysis-tool-6ecmpakpxuvkuxfmjjsuxs.streamlit.app/
 
