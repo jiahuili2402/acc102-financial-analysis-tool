@@ -110,7 +110,7 @@ company_df = load_official_data()
 industry_list = sorted(company_df["industry"].unique())
 fiscal_years = [2020, 2021, 2022, 2023, 2024]
 
-# Unit Conversion: 100 Million RMB (1亿) → 1 B RMB = 10亿 RMB
+# Unit Conversion: Convert from 100 million RMB to 1 billion RMB
 def to_billion(val):
     return round(val / 10, 2)
 
